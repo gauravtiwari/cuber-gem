@@ -8,6 +8,7 @@ module Cuber
 
     def validate
       validate_app
+      validate_hostname
       validate_release
       validate_repo
       validate_buildpacks
@@ -32,6 +33,10 @@ module Cuber
     def validate_app
       @errors << 'app name must be present' if @options[:app].to_s.strip.empty?
       @errors << 'app name can only include lowercase letters, digits or dashes' if @options[:app] !~ /\A[a-z0-9\-]+\z/
+    end
+    
+    def validate_hostname
+      @errors << 'hostname must be present' if @options[:hostname].to_s.strip.empty?
     end
 
     def validate_release
