@@ -2,6 +2,7 @@ module Cuber
   class CuberfileParser
     def initialize
       @app = nil
+      @hostname = nil
       @release = nil
       @repo = nil
       @buildpacks = nil
@@ -27,6 +28,10 @@ module Cuber
 
     def app name
       @app = name
+    end
+    
+    def hostname
+      @hostname = hostname
     end
 
     def release version
