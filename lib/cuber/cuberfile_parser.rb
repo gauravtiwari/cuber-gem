@@ -30,7 +30,7 @@ module Cuber
       @app = name
     end
     
-    def hostname
+    def hostname hostname
       @hostname = hostname
     end
 
