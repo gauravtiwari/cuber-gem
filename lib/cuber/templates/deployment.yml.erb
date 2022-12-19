@@ -333,15 +333,16 @@ spec:
   - secretName: ssl
   <%- end -%>
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: web-service
-            port:
-              number: 80
+    - host: <%= @options[:hostname].to_s.to_json %>
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: web-service
+              port:
+                number: 80
 <%- else -%>
 ---
 apiVersion: v1
