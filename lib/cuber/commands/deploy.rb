@@ -52,7 +52,7 @@ module Cuber::Commands
     end
 
     def set_release_name
-      @options[:release] = "#{commit_hash}-#{Time.now.utc.iso8601.delete('^0-9')}"
+      @options[:release] = commit_hash
     end
 
     def pack
