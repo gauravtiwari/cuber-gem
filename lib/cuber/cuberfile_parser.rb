@@ -2,6 +2,7 @@ module Cuber
   class CuberfileParser
     def initialize
       @app = nil
+      @build = true
       @hostname = nil
       @release = nil
       @repo = nil
@@ -29,7 +30,11 @@ module Cuber
     def app name
       @app = name
     end
-    
+
+    def build enabled = true
+      @build = enabled
+    end
+
     def hostname hostname
       @hostname = hostname
     end
@@ -81,7 +86,7 @@ module Cuber
     def env key, value, secret: false
       secret ? (@secrets[key] = value) : (@env[key] = value)
     end
-    
+
     def health url
       @health = url
     end

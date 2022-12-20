@@ -12,11 +12,14 @@ module Cuber::Commands
       else
         checkout
         set_release_name
-        if @options[:buildpacks]
-          pack
-        else
-          build
-          push
+
+        if @options[:build]
+          if @options[:buildpacks]
+            pack
+          else
+            build
+            push
+          end
         end
       end
       configure

@@ -9,6 +9,7 @@ module Cuber
     def validate
       validate_app
       validate_hostname
+      validate_build
       validate_release
       validate_repo
       validate_buildpacks
@@ -34,7 +35,12 @@ module Cuber
       @errors << 'app name must be present' if @options[:app].to_s.strip.empty?
       @errors << 'app name can only include lowercase letters, digits or dashes' if @options[:app] !~ /\A[a-z0-9\-]+\z/
     end
-    
+
+    def validate_build
+      return unless @options[:build]
+      @errors << 'build must be true or false' if @options[:build] != true && @options[:build] != false
+    end
+
     def validate_hostname
       @errors << 'hostname must be present' if @options[:hostname].to_s.strip.empty?
     end
@@ -88,7 +94,7 @@ module Cuber
         @errors << "proc \"#{procname}\" command must be present" if proc[:cmd].to_s.strip.empty?
         @errors << "proc \"#{procname}\" scale must be a positive number" unless proc[:scale].is_a?(Integer) && proc[:scale] > 0
         @errors << "proc \"#{procname}\" cpu must be a positive number" unless proc[:cpu].nil? || proc[:cpu].is_a?(Numeric) && proc[:cpu] > 0
-        @errors << "proc \"#{procname}\" ram must be a positive number" unless proc[:ram].nil? || proc[:ram].is_a?(Numeric) && proc[:ram] > 0  
+        @errors << "proc \"#{procname}\" ram must be a positive number" unless proc[:ram].nil? || proc[:ram].is_a?(Numeric) && proc[:ram] > 0
         @errors << "proc \"#{procname}\" term must be a positive number" unless proc[:term].is_a?(Integer) && proc[:term] > 0
         proc[:env].each do |key, value|
           @errors << "proc \"#{procname}\" env name can only include uppercase letters, digits or underscores" if key !~ /\A[A-Z_]+[A-Z0-9_]*\z/
@@ -109,7 +115,7 @@ module Cuber
         @errors << "env \"#{key}\" name can only include uppercase letters, digits or underscores" if key !~ /\A[A-Z_]+[A-Z0-9_]*\z/
       end
     end
-    
+
     def validate_health
       return unless @options[:health]
       @errors << 'health checks must be an http url' unless URI.parse(@options[:health]).kind_of? URI::HTTP
