@@ -330,7 +330,9 @@ metadata:
 spec:
   <%- if @options[:ssl] -%>
   tls:
-  - secretName: ssl
+  - hosts:
+    - <%= @options[:hostname].to_s.to_json %>
+    secretName: ssl
   <%- end -%>
   rules:
     - host: <%= @options[:hostname].to_s.to_json %>
