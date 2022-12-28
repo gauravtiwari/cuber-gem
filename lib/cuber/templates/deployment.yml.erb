@@ -274,7 +274,7 @@ spec:
           restartPolicy: Never
 <%- end -%>
 
-<%- if @options[:ssl] -%>
+<%- if @options[:ssl]&.is_a?(Hash) -%>
 ---
 apiVersion: v1
 kind: Secret
@@ -328,7 +328,7 @@ metadata:
     <%= key %>: <%= value.to_s.to_json %>
     <%- end -%>
 spec:
-  <%- if @options[:ssl] -%>
+  <%- if @options[:ssl]&.is_a?(Boolean) -%>
   tls:
   - hosts:
     - <%= @options[:hostname].to_s.to_json %>
