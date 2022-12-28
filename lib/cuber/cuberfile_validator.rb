@@ -26,7 +26,6 @@ module Cuber
       validate_lb
       validate_ingress
       validate_ssl
-      validate_assets
       @errors
     end
 
@@ -140,13 +139,6 @@ module Cuber
         @errors << 'ssl crt must be a file' unless File.exist? @options[:ssl][:crt]
         @errors << 'ssl key must be a file' unless File.exist? @options[:ssl][:key]
       end
-    end
-
-    def validate_assets
-      return unless @options[:assets]
-
-      @errors << 'assets hostname must be provided' unless @options[:assets][:hostname]
-      @errors << 'assets lb options must be a hash' if @options[:assets][:lb] && !@options[:assets][:lb].is_a?(Hash)
     end
   end
 end

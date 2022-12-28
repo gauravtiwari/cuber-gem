@@ -21,7 +21,6 @@ module Cuber
       @lb = {}
       @ingress = nil
       @ssl = nil
-      @assets = {}
     end
 
     def method_missing m, *args
@@ -102,10 +101,6 @@ module Cuber
 
     def ssl enabled, crt = nil, key = nil
       @ssl = crt && key ? { crt: crt, key: key } : enabled
-    end
-
-    def assets hostname:, lb: {}
-      @assets = { hostname: hostname, lb: lb }
     end
   end
 end
