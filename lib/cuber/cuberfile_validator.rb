@@ -26,6 +26,7 @@ module Cuber
       validate_lb
       validate_ingress
       validate_ssl
+      validate_static
       @errors
     end
 
@@ -139,6 +140,13 @@ module Cuber
         @errors << 'ssl crt must be a file' unless File.exist? @options[:ssl][:crt]
         @errors << 'ssl key must be a file' unless File.exist? @options[:ssl][:key]
       end
+    end
+
+    def validate_static
+      return unless @options[:static]
+
+      @errors << 'static hostname must be provided' unless @options[:static][:hostname]
+      @errors << 'static lb options must be a hash' if @options[:static][:lb] && !@options[:static][:lb].is_a?(Hash)
     end
   end
 end

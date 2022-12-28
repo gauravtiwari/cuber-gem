@@ -21,6 +21,7 @@ module Cuber
       @lb = {}
       @ingress = nil
       @ssl = nil
+      @static = {}
     end
 
     def method_missing m, *args
@@ -101,6 +102,10 @@ module Cuber
 
     def ssl enabled, crt = nil, key = nil
       @ssl = crt && key ? { crt: crt, key: key } : enabled
+    end
+
+    def static hostname:, lb: {}
+      @static = { hostname: hostname, lb: lb }
     end
   end
 end
