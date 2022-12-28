@@ -328,7 +328,7 @@ metadata:
     <%= key %>: <%= value.to_s.to_json %>
     <%- end -%>
 spec:
-  <%- if @options[:ssl]&.is_a?(Boolean) -%>
+  <%- if @options[:ssl]&.is_a?(Boolean) && @options[:ssl] -%>
   tls:
   - hosts:
     - <%= @options[:hostname].to_s.to_json %>

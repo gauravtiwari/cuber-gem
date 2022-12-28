@@ -99,8 +99,8 @@ module Cuber
       @ingress = enabled
     end
 
-    def ssl crt, key
-      @ssl = { crt: crt, key: key }
+    def ssl enabled, crt = nil, key = nil
+      @ssl = crt && key ? { crt: crt, key: key } : enabled
     end
   end
 end
