@@ -13,6 +13,10 @@ spec:
     image: <%= @options[:image] %>:<%= @options[:release] %>
     imagePullPolicy: Always
     command: ["sleep", "infinity"]
+    resources:
+      requests:
+        memory: <%= @options[:image] || '128Mi' %>
+        cpu: <%= @options[:cpu] || '250m' %>
     envFrom:
     - configMapRef:
         name: env
