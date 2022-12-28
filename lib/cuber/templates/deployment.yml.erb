@@ -345,12 +345,12 @@ spec:
               name: web-service
               port:
                 number: 80
-<% if @options[:static]&.is_a?(Hash) %>
+<% if @options[:assets]&.is_a?(Hash) %>
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: web-ingress
+  name: web-assets-ingress
   namespace: <%= @options[:app] %>
   labels:
     app.kubernetes.io/name: <%= @options[:app].to_s.to_json %>
@@ -358,18 +358,18 @@ metadata:
     app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
     app.kubernetes.io/managed-by: cuber
   annotations:
-    <%- @options[:static][:lb].each do |key, value| -%>
+    <%- @options[:assets][:lb].each do |key, value| -%>
     <%= key %>: <%= value.to_s.to_json %>
     <%- end -%>
 spec:
   <%- if @options[:ssl]&.is_a?(TrueClass) -%>
   tls:
   - hosts:
-    - <%= @options[:static][:hostname].to_s.to_json %>
+    - <%= @options[:assets][:hostname].to_s.to_json %>
     secretName: ssl
   <%- end -%>
   rules:
-    - host: <%= @options[:static][:hostname].to_s.to_json %>
+    - host: <%= @options[:assets][:hostname].to_s.to_json %>
       http:
         paths:
         - path: /assets/

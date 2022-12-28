@@ -26,7 +26,7 @@ module Cuber
       validate_lb
       validate_ingress
       validate_ssl
-      validate_static
+      validate_assets
       @errors
     end
 
@@ -142,11 +142,11 @@ module Cuber
       end
     end
 
-    def validate_static
-      return unless @options[:static]
+    def validate_assets
+      return unless @options[:assets]
 
-      @errors << 'static hostname must be provided' unless @options[:static][:hostname]
-      @errors << 'static lb options must be a hash' if @options[:static][:lb] && !@options[:static][:lb].is_a?(Hash)
+      @errors << 'assets hostname must be provided' unless @options[:assets][:hostname]
+      @errors << 'assets lb options must be a hash' if @options[:assets][:lb] && !@options[:assets][:lb].is_a?(Hash)
     end
   end
 end
