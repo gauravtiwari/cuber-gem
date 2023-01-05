@@ -26,6 +26,7 @@ module Cuber
       validate_lb
       validate_ingress
       validate_ssl
+      validate_actioncable_ingress
       @errors
     end
 
@@ -139,6 +140,14 @@ module Cuber
         @errors << 'ssl crt must be a file' unless File.exist? @options[:ssl][:crt]
         @errors << 'ssl key must be a file' unless File.exist? @options[:ssl][:key]
       end
+    end
+
+    def validate_actioncable_ingress
+      return unless @options[:actioncable_ingress]
+
+      @errors << 'actioncable_ingress hostname must be provided' unless @options[:actioncable_ingress][:hostname]
+      @errors << 'actioncable_ingress mount_path must be provided' unless @options[:actioncable_ingress][:mount_path]
+      @errors << 'actioncable_ingress lb options must be a hash' if @options[:actioncable_ingress][:lb] && !@options[:actioncable_ingress][:lb].is_a?(Hash)
     end
   end
 end

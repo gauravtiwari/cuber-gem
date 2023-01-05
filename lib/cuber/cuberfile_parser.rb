@@ -20,6 +20,7 @@ module Cuber
       @health = nil
       @lb = {}
       @ingress = nil
+      @actioncable_ingress = {}
       @ssl = nil
     end
 
@@ -101,6 +102,10 @@ module Cuber
 
     def ssl enabled, crt = nil, key = nil
       @ssl = crt && key ? { crt: crt, key: key } : enabled
+    end
+
+    def actioncable_ingress hostname:, mount_path:, lb: {}
+      @actioncable_ingress = { hostname: hostname, mount_path: mount_path, lb: lb }
     end
   end
 end

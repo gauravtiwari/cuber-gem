@@ -345,6 +345,41 @@ spec:
               name: web-service
               port:
                 number: 80
+<% if @options[:actioncable_ingress].present? %>
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: actioncable-ingress
+  namespace: <%= @options[:app] %>
+  labels:
+    app.kubernetes.io/name: <%= @options[:app].to_s.to_json %>
+    app.kubernetes.io/instance: <%= @options[:instance].to_s.to_json %>
+    app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
+    app.kubernetes.io/managed-by: cuber
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    <%- @options[:actioncable_ingress][:lb].each do |key, value| -%>
+    <%= key %>: <%= value.to_s.to_json %>
+    <%- end -%>
+spec:
+  <%- if @options[:ssl]&.is_a?(TrueClass) -%>
+  tls:
+  - hosts:
+    - <%= @options[:actioncable_ingress][:hostname].to_s.to_json %>
+    secretName: ssl
+  <%- end -%>
+  rules:
+    - host: <%= @options[:actioncable_ingress][:hostname].to_s.to_json %>
+      http:
+        paths:
+        - path: <%= @options[:actioncable_ingress][:mount_path].to_s.to_json %>
+          backend:
+            service:
+              name: web-service
+              port:
+                number: 80
 <%- else -%>
 ---
 apiVersion: v1
