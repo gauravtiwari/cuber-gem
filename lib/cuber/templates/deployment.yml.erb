@@ -375,6 +375,7 @@ spec:
       http:
         paths:
         - path: <%= @options[:actioncable_ingress][:mount_path].to_s.to_json %>
+          pathType: Exact
           backend:
             service:
               name: web-service
