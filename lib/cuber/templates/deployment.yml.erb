@@ -369,7 +369,7 @@ spec:
   tls:
   - hosts:
     - <%= @options[:actioncable_ingress][:hostname].to_s.to_json %>
-    secretName: ssl
+    secretName: actioncable-ingress-ssl
   <%- end -%>
   rules:
     - host: <%= @options[:actioncable_ingress][:hostname].to_s.to_json %>
