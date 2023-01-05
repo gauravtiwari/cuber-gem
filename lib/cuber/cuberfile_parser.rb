@@ -105,7 +105,7 @@ module Cuber
     end
 
     def actioncable_ingress hostname:, mount_path:, lb: {}
-      @actioncable_ingress = { hostname: hostname, mount_path: mount_path, lb: (@lb || {}).merge(lb) }
+      @actioncable_ingress = { hostname: hostname, mount_path: mount_path, lb: lb }
     end
   end
 end
