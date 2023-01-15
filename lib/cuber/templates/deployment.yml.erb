@@ -220,11 +220,19 @@ spec:
       imagePullSecrets:
       - name: regcred
       terminationGracePeriodSeconds: <%= proc[:term] %>
+
+<% if procname.to_s == 'web' %>
 ---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: <%= procname %>-autoscaler
+  namespace: <%= @options[:app] %>
+  labels:
+    app.kubernetes.io/name: <%= @options[:app].to_s.to_json %>
+    app.kubernetes.io/instance: <%= @options[:instance].to_s.to_json %>
+    app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
+    app.kubernetes.io/managed-by: cuber
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -245,6 +253,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 80
+<% end %>
 <%- end -%>
 
 <%- @options[:cron].each do |jobname, cron| -%>
