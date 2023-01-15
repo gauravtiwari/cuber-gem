@@ -138,8 +138,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: "25%"
-      maxSurge: 0
+      maxUnavailable: "50%"
+      maxSurge: 2
   template:
     metadata:
       labels:
@@ -149,6 +149,8 @@ spec:
         app.kubernetes.io/managed-by: cuber
         app: <%= procname %>-proc
     spec:
+      hostname: <%= procname %>-proc
+      subdomain: movery
       containers:
       - name: <%= procname %>-proc
         image: <%= @options[:image] %>:<%= @options[:release] %>
@@ -218,6 +220,31 @@ spec:
       imagePullSecrets:
       - name: regcred
       terminationGracePeriodSeconds: <%= proc[:term] %>
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: <%= procname %>-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: <%= procname %>
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
 <%- end -%>
 
 <%- @options[:cron].each do |jobname, cron| -%>
