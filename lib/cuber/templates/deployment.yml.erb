@@ -223,7 +223,7 @@ spec:
 
 <% if procname.to_s == 'web' %>
 ---
-apiVersion: autoscaling/v2beta2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: <%= procname %>-autoscaler
