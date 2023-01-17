@@ -368,7 +368,6 @@ spec:
   tls:
   - hosts:
     - <%= @options[:hostname].to_s.to_json %>
-    - "www.<%= @options[:hostname].to_s %>".to_json
     secretName: ssl
   <%- end -%>
   rules:
