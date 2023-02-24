@@ -145,14 +145,14 @@ metadata:
     <%= key %>: <%= value.to_s.to_json %>
     <%- end -%>
 spec:
-  revisionHistoryLimit: 0
+  revisionHistoryLimit: 2
+  minReadySeconds: 5
   replicas: <%= proc[:scale] %>
   selector:
     matchLabels:
       app: <%= procname %>-proc
   strategy:
     type: RollingUpdate
-    minReadySeconds: 5
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
