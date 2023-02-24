@@ -152,9 +152,10 @@ spec:
       app: <%= procname %>-proc
   strategy:
     type: RollingUpdate
+    minReadySeconds: 5
     rollingUpdate:
-      maxUnavailable: "50%"
-      maxSurge: 2
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
       labels:
