@@ -3,6 +3,7 @@ module Cuber
     def initialize
       @app = nil
       @build = true
+      @labels = {}
       @hostname = nil
       @release = nil
       @repo = nil
@@ -34,6 +35,10 @@ module Cuber
 
     def build enabled = true
       @build = enabled
+    end
+
+    def labels items = {}
+      @labels = items
     end
 
     def hostname hostname

@@ -10,6 +10,7 @@ module Cuber
       validate_app
       validate_hostname
       validate_build
+      validate_labels
       validate_release
       validate_repo
       validate_buildpacks
@@ -40,6 +41,11 @@ module Cuber
     def validate_build
       return unless @options[:build]
       @errors << 'build must be true or false' if @options[:build] != true && @options[:build] != false
+    end
+
+    def validate_labels
+      return unless @options[:labels]
+      @errors << 'labels must be a Hash' unless @options[:labels].is_a?(Hash)
     end
 
     def validate_hostname
@@ -119,7 +125,7 @@ module Cuber
 
     def validate_health
       return unless @options[:health]
-      @errors << 'health checks must be an http url' unless URI.parse(@options[:health]).kind_of? URI::HTTP
+      @errors << 'health checks must be an http url'
     end
 
     def validate_lb
