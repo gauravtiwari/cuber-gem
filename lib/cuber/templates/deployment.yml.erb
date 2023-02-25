@@ -214,11 +214,11 @@ spec:
             port: 8080
             path: <%= URI.parse(@options[:health]).path.to_json %>
             <% if URI.parse(@options[:health]).kind_of?(URI::HTTP) %>
-              httpHeaders:
-                - name: Host
-                  value: <%= URI.parse(@options[:health]).host.to_json %>
-                - name: X-Forwarded-Proto
-                  value: <%= URI.parse(@options[:health]).scheme.to_json %>
+            httpHeaders:
+              - name: Host
+                value: <%= URI.parse(@options[:health]).host.to_json %>
+              - name: X-Forwarded-Proto
+                value: <%= URI.parse(@options[:health]).scheme.to_json %>
             <% end %>
         <%- end -%>
       <%- if @options[:migrate] && @options[:migrate][:check] -%>
