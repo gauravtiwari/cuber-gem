@@ -403,6 +403,7 @@ spec:
   <%- if @options[:ssl]&.is_a?(TrueClass) -%>
   tls:
   - hosts:
+    - www.<%= @options[:hostname].to_s.to_json %>
     - <%= @options[:hostname].to_s.to_json %>
     secretName: ssl
   <%- end -%>
