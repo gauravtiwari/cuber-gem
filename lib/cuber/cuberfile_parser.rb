@@ -4,6 +4,7 @@ module Cuber
       @app = nil
       @build = true
       @labels = {}
+      @node_labels = {}
       @hostname = nil
       @release = nil
       @repo = nil
@@ -39,6 +40,10 @@ module Cuber
 
     def labels key, value
       @labels[key] = value
+    end
+
+    def node_labels key, value
+      @node_labels[key] = value
     end
 
     def hostname hostname

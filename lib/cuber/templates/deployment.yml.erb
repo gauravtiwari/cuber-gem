@@ -109,6 +109,12 @@ spec:
         app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
         app.kubernetes.io/managed-by: cuber
     spec:
+      <%- @options[:node_labels].any? -%>
+      nodeSelector:
+        <%- @options[:node_labels].each do |key, value| -%>
+        <%= key %>: <%= value.to_s.to_json %>
+        <% end %>
+      <% end %>
       containers:
       - name: migration
         image: <%= @options[:image] %>:<%= @options[:release] %>
@@ -170,6 +176,12 @@ spec:
     spec:
       hostname: <%= procname %>-proc
       subdomain: movery
+      <%- @options[:node_labels].any? -%>
+      nodeSelector:
+        <%- @options[:node_labels].each do |key, value| -%>
+        <%= key %>: <%= value.to_s.to_json %>
+        <% end %>
+      <% end %>
       containers:
       - name: <%= procname %>-proc
         image: <%= @options[:image] %>:<%= @options[:release] %>
@@ -317,6 +329,12 @@ spec:
             app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
             app.kubernetes.io/managed-by: cuber
         spec:
+          <%- @options[:node_labels].any? -%>
+          nodeSelector:
+            <%- @options[:node_labels].each do |key, value| -%>
+            <%= key %>: <%= value.to_s.to_json %>
+            <% end %>
+          <% end %>
           containers:
           - name: task
             image: <%= @options[:image] %>:<%= @options[:release] %>

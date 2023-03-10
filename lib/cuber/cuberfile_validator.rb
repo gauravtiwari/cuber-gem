@@ -11,6 +11,7 @@ module Cuber
       validate_hostname
       validate_build
       validate_labels
+      validate_node_labels
       validate_release
       validate_repo
       validate_buildpacks
@@ -47,6 +48,14 @@ module Cuber
 
       @options[:labels].each do |key, value|
         @errors << "labels \"#{key}\" key can only include letters, digits, underscores, dashes, dots or slash" if key !~ /\A[a-zA-Z0-9_\-\.\/]+\z/
+      end
+    end
+
+    def validate_node_labels
+      return unless @options[:node_labels]
+
+      @options[:node_labels].each do |key, value|
+        @errors << "node_labels \"#{key}\" key can only include letters, digits, underscores, dashes, dots or slash" if key !~ /\A[a-zA-Z0-9_\-\.\/]+\z/
       end
     end
 
