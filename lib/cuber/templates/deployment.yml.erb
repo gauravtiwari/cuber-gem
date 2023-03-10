@@ -109,7 +109,7 @@ spec:
         app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
         app.kubernetes.io/managed-by: cuber
     spec:
-      <%- @options[:node_labels].any? -%>
+      <%- if @options[:node_labels].any? -%>
       nodeSelector:
         <%- @options[:node_labels].each do |key, value| -%>
         <%= key %>: <%= value.to_s.to_json %>
@@ -176,7 +176,7 @@ spec:
     spec:
       hostname: <%= procname %>-proc
       subdomain: movery
-      <%- @options[:node_labels].any? -%>
+      <%- if @options[:node_labels].any? -%>
       nodeSelector:
         <%- @options[:node_labels].each do |key, value| -%>
         <%= key %>: <%= value.to_s.to_json %>
@@ -329,7 +329,7 @@ spec:
             app.kubernetes.io/version: <%= @options[:release].to_s.to_json %>
             app.kubernetes.io/managed-by: cuber
         spec:
-          <%- @options[:node_labels].any? -%>
+          <%- if @options[:node_labels].any? -%>
           nodeSelector:
             <%- @options[:node_labels].each do |key, value| -%>
             <%= key %>: <%= value.to_s.to_json %>
