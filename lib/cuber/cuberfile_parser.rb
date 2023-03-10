@@ -37,8 +37,8 @@ module Cuber
       @build = enabled
     end
 
-    def labels items = {}
-      @labels = items
+    def labels key, value
+      @labels[key] = value
     end
 
     def hostname hostname

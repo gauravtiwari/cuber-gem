@@ -44,7 +44,10 @@ module Cuber
 
     def validate_labels
       return unless @options[:labels]
-      @errors << 'labels must be a Hash' unless @options[:labels].is_a?(Hash)
+
+      @options[:labels].each do |key, value|
+        @errors << "labels \"#{key}\" key can only include letters, digits, underscores, dashes, dots or slash" if key !~ /\A[a-zA-Z0-9_\-\.\/]+\z/
+      end
     end
 
     def validate_hostname
