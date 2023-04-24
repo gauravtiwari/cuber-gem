@@ -153,7 +153,6 @@ metadata:
 spec:
   revisionHistoryLimit: 2
   minReadySeconds: 5
-  initialDelaySeconds: 5
   replicas: <%= proc[:scale] %>
   selector:
     matchLabels:
@@ -223,6 +222,7 @@ spec:
         <%- end -%>
         <%- if procname.to_s == 'web' && @options[:health] -%>
         readinessProbe:
+          initialDelaySeconds: 5
           httpGet:
             port: 8080
             path: <%= URI.parse(@options[:health]).path.to_json %>
