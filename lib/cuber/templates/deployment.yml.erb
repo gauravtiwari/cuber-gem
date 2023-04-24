@@ -153,6 +153,7 @@ metadata:
 spec:
   revisionHistoryLimit: 2
   minReadySeconds: 5
+  initialDelaySeconds: 5
   replicas: <%= proc[:scale] %>
   selector:
     matchLabels:
