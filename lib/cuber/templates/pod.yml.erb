@@ -15,7 +15,7 @@ spec:
     command: ["sleep", "infinity"]
     resources:
       requests:
-        memory: <%= @options[:ram] || '128Mi' %>
+        memory: <%= @options[:ram] || '512Mi' %>
         cpu: <%= @options[:cpu] || '250m' %>
     envFrom:
     - configMapRef:
