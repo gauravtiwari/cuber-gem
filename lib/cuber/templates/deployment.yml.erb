@@ -222,7 +222,11 @@ spec:
         <%- end -%>
         <%- if procname.to_s == 'web' && @options[:health] -%>
         readinessProbe:
-          initialDelaySeconds: 5
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
           httpGet:
             port: 8080
             path: <%= URI.parse(@options[:health]).path.to_json %>
@@ -275,7 +279,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: <%= procname %>
-  minReplicas: 3
+  minReplicas: 10
   maxReplicas: 100
   metrics:
   - type: Resource
